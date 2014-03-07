@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import json, codecs, os
+import codecs, os
 
 def outcount():
     i = str(int(open('../.out/.counter').read())+1)

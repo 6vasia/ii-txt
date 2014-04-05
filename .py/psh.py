@@ -6,7 +6,7 @@ cfg = open('../config.cfg').read().splitlines()
 def postf(s):
     data = urllib.urlencode({'tmsg': s,'pauth': cfg[0]})
     #{"Content-type": "application/x-www-form-urlencoded"}
-    u = urllib.urlopen(cfg[1] + 'z/point', data)
+    u = urllib.urlopen(cfg[1] + 'point', data)
     return u.read()
 
 for ml in sys.argv[1:]:

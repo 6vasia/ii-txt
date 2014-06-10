@@ -18,8 +18,8 @@ def _parz(msg):
     mo.update( dict(zip(optz[::2],optz[1::2])) )
     for i,n in enumerate(('echoarea','date','msgfrom','addr','msgto','subj'),1):
         mo[n] = pz[i]
-    mo['msg'] = '\n'.join(pz[8:])
     mo['date'] = int(mo['date'])
+    mo['msg'] = '\n'.join(pz[8:])
     return mo
 
 
@@ -31,7 +31,10 @@ for ea in cfg[2:]:
     my = get_echoarea(ea) or []
     f = codecs.open('../%s/0000.txt' % ea,'w','utf-8')
     for i,m in enumerate(my,1):
-        mo = _parz(codecs.open('msg/%s' % m,'r','utf-8').read())
+        try:
+            mo = _parz(codecs.open('msg/%s' % m,'r','utf-8').read())
+        except:
+            mo = dict(date=0,msgfrom='',addr='',msgto='',msg='',subj='')
         sdate = dateg(mo['date'],'%d/%m %H:%M')
         buf = m + '\n' + mo['msgfrom'] + ' (' + str(mo['addr']) + ') (' + sdate + ' GMT)\nmsgto: ' + mo['msgto'] + '\n' + mo['subj'] + '\n\n' + mo['msg']
         codecs.open('../%s/%s.txt' % (ea,i),'w','utf-8').write(buf)
